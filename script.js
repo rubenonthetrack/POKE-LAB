@@ -632,15 +632,6 @@ function init() {
     const attackType = getAttackType(a);
     selAttaque.innerHTML += `<option value="${i}">${attackName} (${attackType})</option>`;
   });
-
-  // Sélectionner des valeurs par défaut
-  selAttaquant.value = "0";
-  selCible.value = "1";
-  selAttaque.value = "0";
-  
-  // Mettre à jour les prévisualisations
-  updatePreview('attaquant');
-  updatePreview('cible');
 }
 
 function updatePreview(role) {
