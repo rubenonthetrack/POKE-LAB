@@ -7,6 +7,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- ===== POPUP DE SÉLECTION DE LANGUE ===== -->
+  <div id="languagePopup" class="language-popup show">
+    <div class="language-popup-content">
+      <h2>Sélectionnez votre langue / Select your language</h2>
+      <div class="language-buttons">
+        <button class="lang-btn" onclick="setLanguage('fr')">🇫🇷 Français</button>
+        <button class="lang-btn" onclick="setLanguage('en')">🇬🇧 English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OVERLAY POUR LA POPUP ===== -->
+  <div id="languageOverlay" class="language-overlay show"></div>
+
+  <!-- ===== BOUTON DE SWITCH DE LANGUE ===== -->
+  <button id="languageSwitcher" class="language-switcher" onclick="toggleLanguageSwitcher()" title="Changer de langue / Switch language">
+    <span id="currentLangCode">FR</span>
+  </button>
+
+  <!-- ===== MENU DE SÉLECTION DE LANGUE (CACHÉ) ===== -->
+  <div id="languageSwitcherMenu" class="language-switcher-menu">
+    <button class="lang-menu-btn" onclick="setLanguage('fr')">🇫🇷 Français</button>
+    <button class="lang-menu-btn" onclick="setLanguage('en')">🇬🇧 English</button>
+  </div>
+
   <!-- Bouton d'info en haut à gauche -->
   <button id="btnInfo" class="btn-info" onclick="togglePresentation()">
     <img src="https://cdn-icons-png.flaticon.com/512/743/743977.png" alt="Info">
@@ -19,36 +44,37 @@
         <img src="https://cdn-icons-png.flaticon.com/512/743/743977.png" alt="Fermer">
       </button>
       <div class="presentation-content">
-        <h2>🤔 C'est quoi ?</h2>
-        <p><strong>Poké-Lab</strong> est une page web interactive qui transforme les combats Pokémon en vrais calculs de physique. Tu choisis un Pokémon attaquant, une attaque, et une cible, puis le simulateur te montre ce qui se passerait dans la vraie vie en appliquant les lois de la physique sur chaque coup.</p>
+        <h2 data-fr="🤔 C'est quoi ?" data-en="🤔 What is it?">🤔 C'est quoi ?</h2>
+        <p data-fr="<strong>Poké-Lab</strong> est une page web interactive qui transforme les combats Pokémon en vrais calculs de physique. Tu choisis un Pokémon attaquant, une attaque, et une cible, puis le simulateur te montre ce qui se passerait dans la vraie vie en appliquant les lois de la physique sur chaque coup." data-en="<strong>Poké-Lab</strong> is an interactive web page that transforms Pokémon battles into real physics calculations. You choose an attacking Pokémon, an attack, and a target, then the simulator shows you what would happen in real life by applying the laws of physics to each blow.">
+        <strong>Poké-Lab</strong> est une page web interactive qui transforme les combats Pokémon en vrais calculs de physique. Tu choisis un Pokémon attaquant, une attaque, et une cible, puis le simulateur te montre ce qui se passerait dans la vraie vie en appliquant les lois de la physique sur chaque coup.</p>
 
-        <h2>⚡ Ce que fait le site</h2>
+        <h2 data-fr="⚡ Ce que fait le site" data-en="⚡ What the site does">⚡ Ce que fait le site</h2>
         
-        <h3>1️⃣ Tu sélectionnes 3 choses :</h3>
+        <h3 data-fr="1️⃣ Tu sélectionnes 3 choses :" data-en="1️⃣ You select 3 things:">1️⃣ Tu sélectionnes 3 choses :</h3>
         <ul>
-          <li>Un <strong>Pokémon attaquant</strong> (ex : Mackogneur, 130 kg)</li>
-          <li>Une <strong>attaque</strong> (ex : Frappe Atlas, Tonnerre, Lance-Flammes...)</li>
-          <li>Un <strong>Pokémon cible</strong> (ex : Ronflex, 460 kg)</li>
+          <li data-fr="Un <strong>Pokémon attaquant</strong> (ex : Mackogneur, 130 kg)" data-en="An <strong>attacking Pokémon</strong> (e.g.: Machamp, 130 kg)">Un <strong>Pokémon attaquant</strong> (ex : Mackogneur, 130 kg)</li>
+          <li data-fr="Une <strong>attaque</strong> (ex : Frappe Atlas, Tonnerre, Lance-Flammes...)" data-en="An <strong>attack</strong> (e.g.: Heavy Slam, Thunderbolt, Flamethrower...)">Une <strong>attaque</strong> (ex : Frappe Atlas, Tonnerre, Lance-Flammes...)</li>
+          <li data-fr="Un <strong>Pokémon cible</strong> (ex : Ronflex, 460 kg)" data-en="A <strong>target Pokémon</strong> (e.g.: Snorlax, 460 kg)">Un <strong>Pokémon cible</strong> (ex : Ronflex, 460 kg)</li>
         </ul>
 
-        <h3>2️⃣ Tu cliques sur "Simuler l'attaque" et le site calcule :</h3>
+        <h3 data-fr="2️⃣ Tu cliques sur &quot;Simuler l'attaque&quot; et le site calcule :" data-en="2️⃣ You click &quot;Simulate the attack&quot; and the site calculates:">2️⃣ Tu cliques sur "Simuler l'attaque" et le site calcule :</h3>
         <ul>
-          <li><strong>La force d'impact</strong> en Newtons (F = m × a) → combien de force le coup génère</li>
-          <li><strong>L'énergie cinétique</strong> en Joules (Ec = ½mv²) → le potentiel de destruction à l'impact</li>
-          <li><strong>La quantité de mouvement</strong> en kg·m/s (p = mv) → l'élan, la difficulté à stopper le coup</li>
-          <li><strong>La pression d'impact</strong> en Pascals (P = F/S) → la concentration de la force sur la zone de contact</li>
-          <li><strong>Le recul de la cible</strong> → à quelle vitesse la cible est projetée en arrière</li>
-          <li><strong>Des comparaisons concrètes</strong> → "c'est équivalent à se prendre une voiture à 50 km/h" ou "ça pourrait faire bouillir 3 litres d'eau"</li>
+          <li data-fr="<strong>La force d'impact</strong> en Newtons (F = m × a) → combien de force le coup génère" data-en="<strong>The impact force</strong> in Newtons (F = m × a) → how much force the blow generates"><strong>La force d'impact</strong> en Newtons (F = m × a) → combien de force le coup génère</li>
+          <li data-fr="<strong>L'énergie cinétique</strong> en Joules (Ec = ½mv²) → le potentiel de destruction à l'impact" data-en="<strong>Kinetic energy</strong> in Joules (Ec = ½mv²) → the destruction potential at impact"><strong>L'énergie cinétique</strong> en Joules (Ec = ½mv²) → le potentiel de destruction à l'impact</li>
+          <li data-fr="<strong>La quantité de mouvement</strong> en kg·m/s (p = mv) → l'élan, la difficulté à stopper le coup" data-en="<strong>Momentum</strong> in kg·m/s (p = mv) → the momentum, the difficulty to stop the blow"><strong>La quantité de mouvement</strong> en kg·m/s (p = mv) → l'élan, la difficulté à stopper le coup</li>
+          <li data-fr="<strong>La pression d'impact</strong> en Pascals (P = F/S) → la concentration de la force sur la zone de contact" data-en="<strong>Impact pressure</strong> in Pascals (P = F/S) → the concentration of force on the contact area"><strong>La pression d'impact</strong> en Pascals (P = F/S) → la concentration de la force sur la zone de contact</li>
+          <li data-fr="<strong>Le recul de la cible</strong> → à quelle vitesse la cible est projetée en arrière" data-en="<strong>Target recoil</strong> → how fast the target is pushed back"><strong>Le recul de la cible</strong> → à quelle vitesse la cible est projetée en arrière</li>
+          <li data-fr="<strong>Des comparaisons concrètes</strong> → &quot;c'est équivalent à se prendre une voiture à 50 km/h&quot; ou &quot;ça pourrait faire bouillir 3 litres d'eau&quot;" data-en="<strong>Concrete comparisons</strong> → &quot;it's equivalent to being hit by a car at 50 km/h&quot; or &quot;it could boil 3 liters of water&quot;"><strong>Des comparaisons concrètes</strong> → "c'est équivalent à se prendre une voiture à 50 km/h" ou "ça pourrait faire bouillir 3 litres d'eau"</li>
         </ul>
 
-        <h3>3️⃣ Pour les attaques spéciales :</h3>
+        <h3 data-fr="3️⃣ Pour les attaques spéciales :" data-en="3️⃣ For special attacks:">3️⃣ Pour les attaques spéciales :</h3>
         <ul>
-          <li><strong>Les attaques feu</strong> calculent l'énergie thermique (Q = mcΔT) → combien de litres d'eau ça fait bouillir</li>
-          <li><strong>Les attaques électriques</strong> calculent la puissance en Watts (P = U × I) → équivalent en nombre d'éclairs ou de prises électriques</li>
+          <li data-fr="<strong>Les attaques feu</strong> calculent l'énergie thermique (Q = mcΔT) → combien de litres d'eau ça fait bouillir" data-en="<strong>Fire attacks</strong> calculate thermal energy (Q = mcΔT) → how many liters of water it can boil"><strong>Les attaques feu</strong> calculent l'énergie thermique (Q = mcΔT) → combien de litres d'eau ça fait bouillir</li>
+          <li data-fr="<strong>Les attaques électriques</strong> calculent la puissance en Watts (P = U × I) → équivalent en nombre d'éclairs ou de prises électriques" data-en="<strong>Electric attacks</strong> calculate power in Watts (P = U × I) → equivalent in number of lightning bolts or electrical outlets"><strong>Les attaques électriques</strong> calculent la puissance en Watts (P = U × I) → équivalent en nombre d'éclairs ou de prises électriques</li>
         </ul>
 
-        <h3>📚 La section "Comprendre les formules"</h3>
-        <p>Un bouton ouvre une zone pédagogique qui explique les 4 formules utilisées avec les variables décomposées visuellement, des explications concrètes sans jargon, et des analogies du monde réel (train de marchandises, balle de fusil, raquettes à neige, poing vs claque).</p>
+        <h3 data-fr="📚 La section &quot;Comprendre les formules&quot;" data-en="📚 The &quot;Understand the formulas&quot; section">📚 La section "Comprendre les formules"</h3>
+        <p data-fr="Un bouton ouvre une zone pédagogique qui explique les 4 formules utilisées avec les variables décomposées visuellement, des explications concrètes sans jargon, et des analogies du monde réel (train de marchandises, balle de fusil, raquettes à neige, poing vs claque)." data-en="A button opens an educational area that explains the 4 formulas used with variables broken down visually, concrete explanations without jargon, and real-world analogies (freight train, bullet, snowshoes, punch vs slap).">Un bouton ouvre une zone pédagogique qui explique les 4 formules utilisées avec les variables décomposées visuellement, des explications concrètes sans jargon, et des analogies du monde réel (train de marchandises, balle de fusil, raquettes à neige, poing vs claque).</p>
       </div>
     </div>
   </div>
@@ -56,211 +82,215 @@
   <div class="container">
     <header>
       <h1>🧪 POKÉ-LAB</h1>
-      <p class="subtitle">Simulateur de Physique Pokémon</p>
-      <p class="creator">💡 Début du projet réalisé par Ruben-Élie TOUITOU</p>
+      <p class="subtitle" data-fr="Simulateur de Physique Pokémon" data-en="Pokémon Physics Simulator">Simulateur de Physique Pokémon</p>
+      <p class="creator" data-fr="💡 Début du projet réalisé par Ruben-Élie TOUITOU" data-en="💡 Project started by Ruben-Élie TOUITOU">💡 Début du projet réalisé par Ruben-Élie TOUITOU</p>
     </header>
 
     <div class="selector-zone">
       <!-- Attaquant -->
       <div class="pokemon-selector">
-        <h3>⚔️ Attaquant</h3>
-        <select id="selectAttaquant" onchange="updatePreview('attaquant')">
+        <h3 data-fr="⚔️ Attaquant" data-en="⚔️ Attacker">⚔️ Attaquant</h3>
+        <select id="selectAttaquant" aria-label="Sélectionner le Pokémon attaquant" onchange="updatePreview('attaquant')">
         </select>
         <div id="previewAttaquant" class="preview"></div>
       </div>
 
       <!-- Attaque -->
       <div class="attack-selector">
-        <h3>💥 Attaque</h3>
-        <select id="selectAttaque">
+        <h3 data-fr="💥 Attaque" data-en="💥 Attack">💥 Attaque</h3>
+        <select id="selectAttaque" aria-label="Sélectionner l'attaque">
         </select>
       </div>
 
       <!-- Cible -->
       <div class="pokemon-selector">
-        <h3>🎯 Cible</h3>
-        <select id="selectCible" onchange="updatePreview('cible')">
+        <h3 data-fr="🎯 Cible" data-en="🎯 Target">🎯 Cible</h3>
+        <select id="selectCible" aria-label="Sélectionner le Pokémon cible" onchange="updatePreview('cible')">
         </select>
         <div id="previewCible" class="preview"></div>
       </div>
     </div>
 
-    <button id="btnSimuler" onclick="lancerSimulation()">
+    <button id="btnSimuler" onclick="lancerSimulation()" data-fr="🔬 SIMULER L'ATTAQUE" data-en="🔬 SIMULATE THE ATTACK">
       🔬 SIMULER L'ATTAQUE
+    </button>
+
+    <div id="resultats" class="resultats"></div>
+
+  </div>
+
+      <button id="btnFormules" onclick="toggleFormules()" data-fr="📚 Comprendre les formules" data-en="📚 Understand the formulas">
+      📚 Comprendre les formules
     </button>
 
   </div>
 
-      <button id="btnFormules" onclick="toggleFormules()">
-      📚 Comprendre les formules
-    </button>
-
-    <div id="formules-panel" class="formules-panel hidden">
+  <div id="formules-panel" class="formules-panel hidden">
       
       <div class="formule-card">
         <div class="formule-header">
           <span class="formule-numero">1</span>
-          <h3>💪 La Force : F = m × a</h3>
-          <span class="formule-badge">2ème Loi de Newton</span>
+          <h3 data-fr="💪 La Force : F = m × a" data-en="💪 The Force: F = m × a">💪 La Force : F = m × a</h3>
+          <span class="formule-badge" data-fr="2ème Loi de Newton" data-en="2nd Law of Newton">2ème Loi de Newton</span>
         </div>
-        <p class="formule-desc">L'intensité d'un impact ou l'effort pour bouger quelque chose.</p>
+        <p class="formule-desc" data-fr="L'intensité d'un impact ou l'effort pour bouger quelque chose." data-en="The intensity of an impact or the effort to move something.">L'intensité d'un impact ou l'effort pour bouger quelque chose.</p>
         
         <div class="formule-variables">
           <div class="variable">
             <span class="var-lettre">F</span>
-            <span class="var-nom">Force</span>
+            <span class="var-nom" data-fr="Force" data-en="Force">Force</span>
             <span class="var-unite">Newtons (N)</span>
           </div>
           <span class="var-operateur">=</span>
           <div class="variable">
             <span class="var-lettre">m</span>
-            <span class="var-nom">Masse</span>
+            <span class="var-nom" data-fr="Masse" data-en="Mass">Masse</span>
             <span class="var-unite">kg</span>
           </div>
           <span class="var-operateur">×</span>
           <div class="variable">
             <span class="var-lettre">a</span>
-            <span class="var-nom">Accélération</span>
+            <span class="var-nom" data-fr="Accélération" data-en="Acceleration">Accélération</span>
             <span class="var-unite">m/s²</span>
           </div>
         </div>
 
         <div class="formule-explication">
-          <h4>🧠 La nuance</h4>
-          <p>C'est pas juste "plus t'es rapide, plus tu frappes fort". Ce qui crée la force, c'est la <strong>décélération brutale</strong>.</p>
-          <p>Ton poing passe de très rapide à zéro en une fraction de seconde quand il touche la cible. Plus cet arrêt est sec (grosse décélération) et plus le poing est lourd, plus <strong>F</strong> est dévastateur.</p>
+          <h4 data-fr="🧠 La nuance" data-en="🧠 The Nuance">🧠 La nuance</h4>
+          <p data-fr="C'est pas juste &quot;plus t'es rapide, plus tu frappes fort&quot;. Ce qui crée la force, c'est la <strong>décélération brutale</strong>." data-en="It's not just &quot;the faster you go, the harder you hit&quot;. What creates force is the <strong>sudden deceleration</strong>.">C'est pas juste "plus t'es rapide, plus tu frappes fort". Ce qui crée la force, c'est la <strong>décélération brutale</strong>.</p>
+          <p data-fr="Ton poing passe de très rapide à zéro en une fraction de seconde quand il touche la cible. Plus cet arrêt est sec (grosse décélération) et plus le poing est lourd, plus <strong>F</strong> est dévastateur." data-en="Your fist goes from very fast to zero in a fraction of a second when it hits the target. The sharper this stop (huge deceleration) and the heavier the fist, the more devastating <strong>F</strong> becomes.">Ton poing passe de très rapide à zéro en une fraction de seconde quand il touche la cible. Plus cet arrêt est sec (grosse décélération) et plus le poing est lourd, plus <strong>F</strong> est dévastateur.</p>
         </div>
       </div>
 
       <div class="formule-card">
         <div class="formule-header">
           <span class="formule-numero">2</span>
-          <h3>⚡ Énergie Cinétique : Ec = ½mv²</h3>
-          <span class="formule-badge">Potentiel de destruction</span>
+          <h3 data-fr="⚡ Énergie Cinétique : Ec = ½mv²" data-en="⚡ Kinetic Energy: Ec = ½mv²">⚡ Énergie Cinétique : Ec = ½mv²</h3>
+          <span class="formule-badge" data-fr="Potentiel de destruction" data-en="Destruction potential">Potentiel de destruction</span>
         </div>
-        <p class="formule-desc">L'énergie qu'un objet possède simplement parce qu'il bouge.</p>
+        <p class="formule-desc" data-fr="L'énergie qu'un objet possède simplement parce qu'il bouge." data-en="The energy an object possesses simply because it is moving.">L'énergie qu'un objet possède simplement parce qu'il bouge.</p>
         
         <div class="formule-variables">
           <div class="variable">
             <span class="var-lettre">Ec</span>
-            <span class="var-nom">Énergie cinétique</span>
+            <span class="var-nom" data-fr="Énergie cinétique" data-en="Kinetic energy">Énergie cinétique</span>
             <span class="var-unite">Joules (J)</span>
           </div>
           <span class="var-operateur">=</span>
           <div class="variable">
             <span class="var-lettre">½m</span>
-            <span class="var-nom">Demi-masse</span>
+            <span class="var-nom" data-fr="Demi-masse" data-en="Half mass">Demi-masse</span>
             <span class="var-unite">kg</span>
           </div>
           <span class="var-operateur">×</span>
           <div class="variable">
             <span class="var-lettre">v²</span>
-            <span class="var-nom">Vitesse au carré</span>
+            <span class="var-nom" data-fr="Vitesse au carré" data-en="Speed squared">Vitesse au carré</span>
             <span class="var-unite">(m/s)²</span>
           </div>
         </div>
 
         <div class="formule-explication">
-          <h4>🧠 Pourquoi la vitesse domine tout</h4>
-          <p>La vitesse est <strong>au carré</strong>, donc son effet est exponentiel :</p>
+          <h4 data-fr="🧠 Pourquoi la vitesse domine tout" data-en="🧠 Why speed dominates everything">🧠 Pourquoi la vitesse domine tout</h4>
+          <p data-fr="La vitesse est <strong>au carré</strong>, donc son effet est exponentiel :" data-en="The speed is <strong>squared</strong>, so its effect is exponential:">La vitesse est <strong>au carré</strong>, donc son effet est exponentiel :</p>
           <div class="comparaison-box">
             <div class="comparaison">
-              <span class="comp-titre">Objet 2× plus lourd, même vitesse</span>
-              <span class="comp-resultat">→ 2× plus de dégâts</span>
+              <span class="comp-titre" data-fr="Objet 2× plus lourd, même vitesse" data-en="Object 2× heavier, same speed">Objet 2× plus lourd, même vitesse</span>
+              <span class="comp-resultat" data-fr="→ 2× plus de dégâts" data-en="→ 2× more damage">→ 2× plus de dégâts</span>
             </div>
             <div class="comparaison highlight">
-              <span class="comp-titre">Même objet, 2× plus rapide</span>
-              <span class="comp-resultat">→ 4× plus de dégâts !</span>
+              <span class="comp-titre" data-fr="Même objet, 2× plus rapide" data-en="Same object, 2× faster">Même objet, 2× plus rapide</span>
+              <span class="comp-resultat" data-fr="→ 4× plus de dégâts !" data-en="→ 4× more damage!">→ 4× plus de dégâts !</span>
             </div>
           </div>
-          <p>C'est pour ça qu'une <strong>balle de fusil</strong> (quelques grammes) est mortelle : elle compense son poids plume par une vitesse supersonique.</p>
+          <p data-fr="C'est pour ça qu'une <strong>balle de fusil</strong> (quelques grammes) est mortelle : elle compense son poids plume par une vitesse supersonique." data-en="That's why a <strong>bullet</strong> (a few grams) is lethal: it compensates for its lightweight with supersonic speed.">C'est pour ça qu'une <strong>balle de fusil</strong> (quelques grammes) est mortelle : elle compense son poids plume par une vitesse supersonique.</p>
         </div>
       </div>
 
       <div class="formule-card">
         <div class="formule-header">
           <span class="formule-numero">3</span>
-          <h3>🚂 Quantité de Mouvement : p = m × v</h3>
-          <span class="formule-badge">L'élan</span>
+          <h3 data-fr="🚂 Quantité de Mouvement : p = m × v" data-en="🚂 Momentum: p = m × v">🚂 Quantité de Mouvement : p = m × v</h3>
+          <span class="formule-badge" data-fr="L'élan" data-en="The momentum">L'élan</span>
         </div>
-        <p class="formule-desc">La difficulté qu'on aura à arrêter un objet en mouvement.</p>
+        <p class="formule-desc" data-fr="La difficulté qu'on aura à arrêter un objet en mouvement." data-en="How difficult it is to stop a moving object.">La difficulté qu'on aura à arrêter un objet en mouvement.</p>
         
         <div class="formule-variables">
           <div class="variable">
             <span class="var-lettre">p</span>
-            <span class="var-nom">Quantité de mvt</span>
+            <span class="var-nom" data-fr="Quantité de mvt" data-en="Momentum">Quantité de mvt</span>
             <span class="var-unite">kg·m/s</span>
           </div>
           <span class="var-operateur">=</span>
           <div class="variable">
             <span class="var-lettre">m</span>
-            <span class="var-nom">Masse</span>
+            <span class="var-nom" data-fr="Masse" data-en="Mass">Masse</span>
             <span class="var-unite">kg</span>
           </div>
           <span class="var-operateur">×</span>
           <div class="variable">
             <span class="var-lettre">v</span>
-            <span class="var-nom">Vitesse</span>
+            <span class="var-nom" data-fr="Vitesse" data-en="Speed">Vitesse</span>
             <span class="var-unite">m/s</span>
           </div>
         </div>
 
         <div class="formule-explication">
-          <h4>🧠 L'effet Ronflex</h4>
-          <p>Un Ronflex de <strong>460 kg</strong> qui marche à seulement 2 km/h. Sa vitesse est minuscule. Mais comme sa masse est gigantesque, la multiplication donne un élan énorme.</p>
-          <p>Il emporte tout sur son passage. Comme un <strong>train de marchandises au ralenti</strong> qui pulvérise quand même un camion coincé sur les voies.</p>
+          <h4 data-fr="🧠 L'effet Ronflex" data-en="🧠 The Snorlax Effect">🧠 L'effet Ronflex</h4>
+          <p data-fr="Un Ronflex de <strong>460 kg</strong> qui marche à seulement 2 km/h. Sa vitesse est minuscule. Mais comme sa masse est gigantesque, la multiplication donne un élan énorme." data-en="A Snorlax weighing <strong>460 kg</strong> walking at only 2 km/h. Its speed is tiny. But since its mass is gigantic, the multiplication gives enormous momentum.">Un Ronflex de <strong>460 kg</strong> qui marche à seulement 2 km/h. Sa vitesse est minuscule. Mais comme sa masse est gigantesque, la multiplication donne un élan énorme.</p>
+          <p data-fr="Il emporte tout sur son passage. Comme un <strong>train de marchandises au ralenti</strong> qui pulvérise quand même un camion coincé sur les voies." data-en="It sweeps everything in its path. Like a <strong>freight train moving slowly</strong> that still crushes a truck stuck on the tracks.">Il emporte tout sur son passage. Comme un <strong>train de marchandises au ralenti</strong> qui pulvérise quand même un camion coincé sur les voies.</p>
         </div>
       </div>
 
       <div class="formule-card">
         <div class="formule-header">
           <span class="formule-numero">4</span>
-          <h3>👊 Pression : P = F / S</h3>
-          <span class="formule-badge">Concentration de force</span>
+          <h3 data-fr="👊 Pression : P = F / S" data-en="👊 Pressure: P = F / S">👊 Pression : P = F / S</h3>
+          <span class="formule-badge" data-fr="Concentration de force" data-en="Force concentration">Concentration de force</span>
         </div>
-        <p class="formule-desc">Comment une même force a des effets totalement différents selon la zone de contact.</p>
+        <p class="formule-desc" data-fr="Comment une même force a des effets totalement différents selon la zone de contact." data-en="How the same force has completely different effects depending on the contact area.">Comment une même force a des effets totalement différents selon la zone de contact.</p>
         
         <div class="formule-variables">
           <div class="variable">
             <span class="var-lettre">P</span>
-            <span class="var-nom">Pression</span>
+            <span class="var-nom" data-fr="Pression" data-en="Pressure">Pression</span>
             <span class="var-unite">Pascals (Pa)</span>
           </div>
           <span class="var-operateur">=</span>
           <div class="variable">
             <span class="var-lettre">F</span>
-            <span class="var-nom">Force</span>
+            <span class="var-nom" data-fr="Force" data-en="Force">Force</span>
             <span class="var-unite">Newtons (N)</span>
           </div>
           <span class="var-operateur">÷</span>
           <div class="variable">
             <span class="var-lettre">S</span>
-            <span class="var-nom">Surface</span>
+            <span class="var-nom" data-fr="Surface" data-en="Surface">Surface</span>
             <span class="var-unite">m²</span>
           </div>
         </div>
 
         <div class="formule-explication">
-          <h4>🧠 Poing vs Claque</h4>
-          <p>Imagine une force de 100N dans les deux cas :</p>
+          <h4 data-fr="🧠 Poing vs Claque" data-en="🧠 Punch vs Slap">🧠 Poing vs Claque</h4>
+          <p data-fr="Imagine une force de 100N dans les deux cas :" data-en="Imagine a force of 100N in both cases:">Imagine une force de 100N dans les deux cas :</p>
           <div class="comparaison-box">
             <div class="comparaison">
-              <span class="comp-titre">🖐️ La claque (grande surface)</span>
-              <span class="comp-resultat">100 ÷ grand nombre = pression faible → ça pique</span>
+              <span class="comp-titre" data-fr="🖐️ La claque (grande surface)" data-en="🖐️ The slap (large surface)">🖐️ La claque (grande surface)</span>
+              <span class="comp-resultat" data-fr="100 ÷ grand nombre = pression faible → ça pique" data-en="100 ÷ large number = low pressure → it stings">100 ÷ grand nombre = pression faible → ça pique</span>
             </div>
             <div class="comparaison highlight">
-              <span class="comp-titre">👊 Le poing (petite surface)</span>
-              <span class="comp-resultat">100 ÷ petit nombre = pression énorme → ça casse</span>
+              <span class="comp-titre" data-fr="👊 Le poing (petite surface)" data-en="👊 The punch (small surface)">👊 Le poing (petite surface)</span>
+              <span class="comp-resultat" data-fr="100 ÷ petit nombre = pression énorme → ça casse" data-en="100 ÷ small number = huge pressure → it breaks">100 ÷ petit nombre = pression énorme → ça casse</span>
             </div>
           </div>
-          <p>Même principe : on marche sur la neige avec des <strong>raquettes</strong> (grande surface = on flotte) mais on <strong>s'enfonce</strong> avec des chaussures normales.</p>
+          <p data-fr="Même principe : on marche sur la neige avec des <strong>raquettes</strong> (grande surface = on flotte) mais on <strong>s'enfonce</strong> avec des chaussures normales." data-en="Same principle: we walk on snow with <strong>snowshoes</strong> (large surface = we float) but we <strong>sink</strong> with normal shoes.">Même principe : on marche sur la neige avec des <strong>raquettes</strong> (grande surface = on flotte) mais on <strong>s'enfonce</strong> avec des chaussures normales.</p>
         </div>
       </div>
 
     </div>
 
     <footer class="footer">
-      <p>&copy; 2026 Ruben-Élie TOUITOU - Poké-Lab. Tous droits réservés.</p>
+      <p data-fr="&copy; 2026 Ruben-Élie TOUITOU - Poké-Lab. Tous droits réservés." data-en="&copy; 2026 Ruben-Élie TOUITOU - Poké-Lab. All rights reserved.">&copy; 2026 Ruben-Élie TOUITOU - Poké-Lab. Tous droits réservés.</p>
     </footer>
   </div>
 
